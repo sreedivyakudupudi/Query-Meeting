@@ -1,20 +1,22 @@
 from fastapi import APIRouter, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, JSONResponse
-# import moviepy
+import os
 from moviepy.editor import VideoFileClip
 import assemblyai as aai
 from transformers import BartTokenizer, BartForConditionalGeneration
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from dotenv import load_dotenv
 
+load_dotenv()
 
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 chunks = []
 index = None
 
-aai.settings.api_key = "d7155cff16724a10850f626b81d5d4e6"
+aai.settings.api_key = os.getenv("ASSEMBLY_API")
 diarized_text = ""
 
 router = APIRouter()
